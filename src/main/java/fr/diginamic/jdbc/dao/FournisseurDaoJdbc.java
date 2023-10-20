@@ -52,7 +52,8 @@ public class FournisseurDaoJdbc implements FournisseurDAO {
 		int nb;
 		try {
 			stat = connection.createStatement();
-			nb = stat.executeUpdate("INSERT INTO fournisseur (ID, NOM) VALUES (" + fournisseur.getId() + ", '" + fournisseur.getNom() +"')");
+			nb = stat.executeUpdate("INSERT INTO fournisseur (ID, NOM) VALUES (" + fournisseur.getId() + ", '"
+					+ fournisseur.getNom() + "')");
 			stat.close();
 		} catch (SQLException e) {
 			System.err.println(e.getMessage());
@@ -68,7 +69,7 @@ public class FournisseurDaoJdbc implements FournisseurDAO {
 		int nb;
 		try {
 			stat = connection.createStatement();
-			nb = stat.executeUpdate("UPDATE fournisseur SET NOM='" + nouveauNom + "' WHERE NOM='"+ ancienNom +"'");
+			nb = stat.executeUpdate("UPDATE fournisseur SET NOM='" + nouveauNom + "' WHERE NOM='" + ancienNom + "'");
 			stat.close();
 		} catch (SQLException e) {
 			System.err.println(e.getMessage());
@@ -76,8 +77,7 @@ public class FournisseurDaoJdbc implements FournisseurDAO {
 			throw new ExceptionTechnique("Un probléme est survenu lors de la connection a la DB", e);
 		}
 		System.out.println(nb);
-		
-		
+
 		return 0;
 	}
 
@@ -87,7 +87,7 @@ public class FournisseurDaoJdbc implements FournisseurDAO {
 		int nb;
 		try {
 			stat = connection.createStatement();
-			nb = stat.executeUpdate("DELETE FROM fournisseur WHERE NOM='"+ fournisseur.getNom() +"'");
+			nb = stat.executeUpdate("DELETE FROM fournisseur WHERE NOM='" + fournisseur.getNom() + "'");
 
 			stat.close();
 		} catch (SQLException e) {
@@ -96,7 +96,7 @@ public class FournisseurDaoJdbc implements FournisseurDAO {
 			throw new ExceptionTechnique("Un probléme est survenu lors de la connection a la DB", e);
 		}
 		System.out.println(nb);
-		
+
 		return false;
 	}
 

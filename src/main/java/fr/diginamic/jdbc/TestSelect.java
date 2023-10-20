@@ -28,33 +28,32 @@ public class TestSelect {
 		}
 
 		Connection maConnection = null;
-		
-		ArrayList<Fournisseur> arrayFournisseur = new ArrayList<Fournisseur>();
+
+		ArrayList<Fournisseur> arrayFournisseur = new ArrayList<>();
 
 		try {
 
 			maConnection = DriverManager.getConnection("jdbc:mariadb://localhost:3306/compta", "root", "");
 			System.out.println("connection établi a la bdd : " + maConnection);
-			
+
 			Statement stat = maConnection.createStatement();
 			ResultSet curseur = stat.executeQuery("SELECT ID, NOM FROM FOURNISSEUR");
-			
-			while(curseur.next()) {
+
+			while (curseur.next()) {
 				Integer id = curseur.getInt("ID");
 				String nom = curseur.getString("NOM");
-				
+
 				Fournisseur fournisseurActuel = new Fournisseur(id, nom);
 				arrayFournisseur.add(fournisseurActuel);
 			}
-			
+
 			curseur.close();
-			
+
 			stat.close();
-			
+
 			for (Fournisseur fournisseurs : arrayFournisseur) {
 				System.out.println(fournisseurs);
 			}
-			
 
 		} catch (SQLException e) {
 
@@ -70,7 +69,6 @@ public class TestSelect {
 					maConnection.close();
 
 				}
-				
 
 			} catch (SQLException e) {
 

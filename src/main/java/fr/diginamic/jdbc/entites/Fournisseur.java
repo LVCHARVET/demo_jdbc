@@ -8,15 +8,11 @@ public class Fournisseur {
 		this.id = id;
 		this.nom = nom;
 	}
-	
-	
 
 	@Override
 	public String toString() {
 		return "Fournisseur [id=" + id + ", nom=" + nom + "]";
 	}
-
-
 
 	public int getId() {
 		return id;

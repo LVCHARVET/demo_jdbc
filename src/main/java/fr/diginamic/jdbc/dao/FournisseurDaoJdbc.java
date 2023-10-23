@@ -1,6 +1,7 @@
 package fr.diginamic.jdbc.dao;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -45,16 +46,21 @@ public class FournisseurDaoJdbc implements FournisseurDAO {
 		return arrayFournisseur;
 
 	}
+	
+	/**/
 
 	@Override
 	public void insert(Fournisseur fournisseur) {
-		Statement stat = null;
+		PreparedStatement insertFournisseur = null;
 		int nb;
 		try {
-			stat = connection.createStatement();
-			nb = stat.executeUpdate("INSERT INTO fournisseur (ID, NOM) VALUES (" + fournisseur.getId() + ", '"
-					+ fournisseur.getNom() + "')");
-			stat.close();
+			
+			insertFournisseur = connection.prepareStatement("INSERT INTO fournisseur (ID, NOM) VALUES (?, ?)");
+			insertFournisseur.setInt(1, fournisseur.getId());
+			insertFournisseur.setString(2, fournisseur.getNom());
+			nb = insertFournisseur.executeUpdate();
+			
+			insertFournisseur.close();
 		} catch (SQLException e) {
 			System.err.println(e.getMessage());
 
@@ -65,12 +71,14 @@ public class FournisseurDaoJdbc implements FournisseurDAO {
 
 	@Override
 	public int update(String ancienNom, String nouveauNom) {
-		Statement stat = null;
+		PreparedStatement updateFournisseur = null;
 		int nb;
 		try {
-			stat = connection.createStatement();
-			nb = stat.executeUpdate("UPDATE fournisseur SET NOM='" + nouveauNom + "' WHERE NOM='" + ancienNom + "'");
-			stat.close();
+			updateFournisseur = connection.prepareStatement("UPDATE fournisseur SET NOM=? WHERE NOM=?");
+			updateFournisseur.setString(1, nouveauNom);
+			updateFournisseur.setString(2, ancienNom);
+			nb = updateFournisseur.executeUpdate();
+			updateFournisseur.close();
 		} catch (SQLException e) {
 			System.err.println(e.getMessage());
 
@@ -78,18 +86,18 @@ public class FournisseurDaoJdbc implements FournisseurDAO {
 		}
 		System.out.println(nb);
 
-		return 0;
+		return nb;
 	}
 
 	@Override
 	public boolean delete(Fournisseur fournisseur) {
-		Statement stat = null;
+		PreparedStatement deleteFournisseur = null;
 		int nb;
 		try {
-			stat = connection.createStatement();
-			nb = stat.executeUpdate("DELETE FROM fournisseur WHERE NOM='" + fournisseur.getNom() + "'");
-
-			stat.close();
+			deleteFournisseur = connection.prepareStatement("DELETE FROM fournisseur WHERE NOM=?");
+			deleteFournisseur.setString(1, fournisseur.getNom());
+			nb = deleteFournisseur.executeUpdate();
+			deleteFournisseur.close();
 		} catch (SQLException e) {
 			System.err.println(e.getMessage());
 
